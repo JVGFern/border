@@ -2,133 +2,109 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Nossa História de Amor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor | Momentos Especiais</title>
     <style>
+        :root {
+            --primary-color: #ff758c;
+            --secondary-color: #ff7eb3;
+            --text-color: #2d3436;
+            --bg-color: #fff5f5;
+            --border-radius: 12px;
+            --transition: all 0.3s ease-in-out;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Montserrat', 'Arial', sans-serif;
         }
 
         body {
-            background-color: #fff5f5;
-            color: #4a4a4a;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
         .header {
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 20px;
+            padding: 2rem;
             text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
 
         .frame-designer {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .frame-designer {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
         }
 
         .preview-section {
-            flex: 1;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .frame-preview {
             position: relative;
             width: 100%;
-            height: 500px;
+            height: 600px;
             background: white;
-            border: 20px solid #8b4513;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
+            border: 25px solid #8b4513;
+            border-radius: 5px;
+            transition: var(--transition);
+            overflow: hidden;
         }
 
         .frame-preview img {
-            width: calc(100% - 40px);
-            height: calc(100% - 40px);
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
             object-fit: cover;
             position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .customization-section {
-            flex: 1;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-
-        .frame-styles {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .frame-style {
-            cursor: pointer;
-            padding: 10px;
-            border: 2px solid transparent;
-            border-radius: 5px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .frame-style:hover {
-            border-color: #ff758c;
-        }
-
-        .frame-style.selected {
-            border-color: #ff758c;
-            background-color: #fff5f5;
-        }
-
-        .save-button {
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            transition: transform 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        .save-button:hover {
-            transform: translateY(-2px);
+            top: 5px;
+            left: 5px;
+            border-radius: 3px;
+            transition: var(--transition);
         }
 
         .message-overlay {
@@ -136,90 +112,231 @@
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
             border-radius: 20px;
             font-style: italic;
-            color: #ff758c;
+            color: var(--primary-color);
             text-align: center;
             max-width: 80%;
             display: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
         }
 
-        .saved-frames {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .input-group {
+            margin-bottom: 1.5rem;
         }
 
-        .saved-frame {
-            position: relative;
-            padding-top: 100%;
-            border: 10px solid #8b4513;
-            cursor: pointer;
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
-        .saved-frame img {
-            position: absolute;
-            top: 0;
-            left: 0;
+        input[type="text"], 
+        input[type="file"], 
+        textarea {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
         }
 
-        .date-stamp {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 12px;
+        input[type="text"]:focus, 
+        textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 117, 140, 0.2);
         }
 
-        .download-button {
+        .frame-styles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .frame-style {
+            cursor: pointer;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .frame-style:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 117, 140, 0.05);
+        }
+
+        .frame-style.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 117, 140, 0.1);
+            color: var(--primary-color);
+        }
+
+        .button {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .button-secondary {
             background: #4CAF50;
             color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            transition: transform 0.3s ease;
-            margin-top: 10px;
         }
 
-        .download-button:hover {
+        .button:hover {
             transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .filters-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .filter-option {
+            text-align: center;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 117, 140, 0.05);
+        }
+
+        .filter-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 117, 140, 0.1);
+            color: var(--primary-color);
+        }
+
+        .tools-section {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tool-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: #f1f1f1;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tool-button:hover {
+            background: #e1e1e1;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Nossa História de Amor</h1>
-        <p>Capture Nossos Momentos Especiais</p>
+        <p>Eternize Seus Momentos Especiais</p>
     </div>
 
     <div class="container">
         <div class="frame-designer">
-            <div class="preview-section">
+            <div class="preview-section section-card">
                 <div class="frame-preview" id="framePreview">
                     <img id="previewImage" src="/api/placeholder/400/320" alt="Envie sua foto">
                     <div class="message-overlay" id="messageOverlay"></div>
                 </div>
-                <button class="download-button" onclick="downloadFrame()">Baixar Foto Emoldurada ❤️</button>
+
+                <div class="tools-section">
+                    <button class="tool-button" onclick="rotateImage(-90)">↶ Girar</button>
+                    <button class="tool-button" onclick="rotateImage(90)">↷ Girar</button>
+                    <button class="tool-button" onclick="resetImage()">↺ Resetar</button>
+                </div>
+
+                <div class="filters-section">
+                    <div class="filter-option" onclick="applyFilter('normal')">Normal</div>
+                    <div class="filter-option" onclick="applyFilter('grayscale')">P&B</div>
+                    <div class="filter-option" onclick="applyFilter('sepia')">Sépia</div>
+                    <div class="filter-option" onclick="applyFilter('vintage')">Vintage</div>
+                </div>
+
+                <button class="button button-secondary" onclick="downloadFrame()">Baixar Foto ❤️</button>
             </div>
 
-            <div class="customization-section">
+            <div class="customization-section section-card">
                 <div class="input-group">
-                    <label>Enviar Sua Foto</label>
+                    <label>Escolha uma Foto</label>
                     <input type="file" accept="image/*" onchange="updatePreview(event)">
                 </div>
 
@@ -227,23 +344,31 @@
                     <label>Estilo da Moldura</label>
                     <div class="frame-styles">
                         <div class="frame-style selected" onclick="updateFrameStyle('classic', event)">Madeira Clássica</div>
-                        <div class="frame-style" onclick="updateFrameStyle('modern', event)">Branco Moderno</div>
-                        <div class="frame-style" onclick="updateFrameStyle('vintage', event)">Dourado Vintage</div>
+                        <div class="frame-style" onclick="updateFrameStyle('modern', event)">Moderno</div>
+                        <div class="frame-style" onclick="updateFrameStyle('vintage', event)">Vintage</div>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label>Título da Memória</label>
-                    <input type="text" id="memoryTitle" placeholder="Dê um nome para esta memória...">
+                    <input type="text" id="memoryTitle" placeholder="Ex: Nosso Primeiro Encontro">
                 </div>
 
                 <div class="input-group">
-                    <label>Mensagem de Amor</label>
-                    <textarea id="message" rows="3" placeholder="Escreva uma mensagem carinhosa..."></textarea>
+                    <label>Mensagem Especial</label>
+                    <textarea id="message" rows="3" placeholder="Escreva uma mensagem para eternizar esse momento..."></textarea>
                 </div>
+
+                <button class="button button-primary" onclick="saveFrame()">Salvar Memória</button>
             </div>
         </div>
     </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
 
     <script>
         const frameStyles = {
@@ -253,78 +378,292 @@
         };
 
         let selectedStyle = 'classic';
+        let currentRotation = 0;
+        let currentFilter = 'normal';
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'success' ? '#4CAF50' : '#ff758c';
+            toast.style.color = 'white';
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
 
         function updatePreview(event) {
             const file = event.target.files[0];
             if (file) {
+                showLoading();
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('previewImage').src = e.target.result;
+                    hideLoading();
+                    showToast('Imagem carregada com sucesso!');
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function updateFrameStyle(style, event) {
-            selectedStyle = style;
-            document.getElementById('framePreview').style.borderColor = frameStyles[style];
+        function rotateImage(degrees) {
+            currentRotation = (currentRotation + degrees) % 360;
+            const img = document.getElementById('previewImage');
+            img.style.transform = `rotate(${currentRotation}deg)`;
+        }
+
+        function resetImage() {
+            currentRotation = 0;
+            currentFilter = 'normal';
+            const img = document.getElementById('previewImage');
+            img.style.transform = '';
+            img.style.filter = '';
             
-            document.querySelectorAll('.frame-style').forEach(el => {
+            document.querySelectorAll('.filter-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector('.filter-option:first-child').classList.add('selected');
+            
+            showToast('Imagem resetada!');
+        }
+
+        function applyFilter(filter) {
+            currentFilter = filter;
+            const img = document.getElementById('previewImage');
+            
+            const filters = {
+                normal: '',
+                grayscale: 'grayscale(100%)',
+                sepia: 'sepia(100%)',
+                vintage: 'sepia(70%) brightness(90%) contrast(110%)'
+            };
+            
+            img.style.filter = filters[filter];
+            
+            document.querySelectorAll('.filter-option').forEach(el => {
                 el.classList.remove('selected');
             });
             event.currentTarget.classList.add('selected');
         }
 
+        function updateFrameStyle(style, event) {
+            selectedStyle = style;
+            document.getElementById('framePreview').style.borderColor = frameStyles[style];
+
+            document.querySelectorAll('.frame-style').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            showToast('Estilo da moldura atualizado!');
+        }
+
         function downloadFrame() {
+            showLoading();
             const framePreview = document.getElementById('framePreview');
             
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            canvas.width = framePreview.offsetWidth;
-            canvas.height = framePreview.offsetHeight;
+            // Aumentar a resolução do canvas para 4K
+            canvas.width = 3840;
+            canvas.height = 2160;
             
+            // Habilitar configurações de alta qualidade
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            // Desenhar a moldura
             ctx.fillStyle = frameStyles[selectedStyle];
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            // Desenhar a imagem
             const img = document.getElementById('previewImage');
-            const borderWidth = 20;
-            ctx.drawImage(img, 
-                borderWidth, borderWidth, 
-                canvas.width - (borderWidth * 2), 
-                canvas.height - (borderWidth * 2)
-            );
+            const borderWidth = canvas.width * 0.1; // 10% de borda
             
-            const message = document.getElementById('message').value;
-            if (message) {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.fillRect(
-                    borderWidth + 20, 
-                    canvas.height - borderWidth - 60,
-                    canvas.width - (borderWidth * 2) - 40,
-                    40
-                );
-                ctx.fillStyle = '#ff758c';
-                ctx.font = '16px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText(
-                    message,
-                    canvas.width / 2,
-                    canvas.height - borderWidth - 30
-                );
+            // Criar canvas temporário para aplicar rotação e filtros em alta resolução
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width - (borderWidth * 2);
+            tempCanvas.height = canvas.height - (borderWidth * 2);
+            
+            // Configurar alta qualidade no canvas temporário
+            tempCtx.imageSmoothingEnabled = true;
+            tempCtx.imageSmoothingQuality = 'high';
+            
+            // Aplicar rotação
+            if (currentRotation !== 0) {
+                tempCtx.save();
+                tempCtx.translate(tempCanvas.width/2, tempCanvas.height/2);
+                tempCtx.rotate(currentRotation * Math.PI/180);
+                tempCtx.translate(-tempCanvas.width/2, -tempCanvas.height/2);
             }
             
+            // Desenhar imagem no canvas temporário com melhor qualidade
+            tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+            
+            if (currentRotation !== 0) {
+                tempCtx.restore();
+            }
+            
+            // Aplicar filtros com preservação de qualidade
+            if (currentFilter !== 'normal') {
+                const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                applyFilterToImageData(imageData, currentFilter);
+                tempCtx.putImageData(imageData, 0, 0);
+            }
+            
+            // Copiar do canvas temporário para o principal
+            ctx.drawImage(tempCanvas, borderWidth, borderWidth);
+            
+            // Adicionar mensagem se existir com fonte maior para maior resolução
+            const message = document.getElementById('message').value;
+            if (message) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                const messageY = canvas.height - borderWidth - 200;
+                const messageHeight = 160;
+                
+                // Fundo da mensagem com cantos arredondados
+                roundRect(ctx, 
+                    borderWidth + 80,
+                    messageY,
+                    canvas.width - (borderWidth * 2) - 160,
+                    messageHeight,
+                    40
+                );
+                
+                // Texto da mensagem em alta resolução
+                ctx.fillStyle = '#ff758c';
+                ctx.font = 'bold 96px Montserrat';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Quebra de texto automática
+                const maxWidth = canvas.width - (borderWidth * 2) - 240;
+                wrapText(ctx, message, canvas.width/2, messageY + messageHeight/2, maxWidth, 96);
+            }
+            
+            // Adicionar data em alta resolução
+            const date = new Date().toLocaleDateString('pt-BR');
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.font = '64px Montserrat';
+            ctx.textAlign = 'right';
+            ctx.fillText(date, canvas.width - borderWidth - 40, borderWidth + 80);
+            
+            // Download com máxima qualidade
             const link = document.createElement('a');
             const title = document.getElementById('memoryTitle').value || 'nossa-memoria';
-            link.download = `${title}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            link.download = `${title}-${Date.now()}.png`;
+            
+            // Usar qualidade máxima na exportação
+            link.href = canvas.toDataURL('image/png', 1.0);
+            
+            setTimeout(() => {
+                hideLoading();
+                link.click();
+                showToast('Imagem baixada em alta qualidade!');
+            }, 500);
+        }
+        // Função auxiliar para desenhar retângulo com cantos arredondados
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
         }
 
+        // Função para quebra automática de texto
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+
+            // Centralizar verticalmente todas as linhas
+            const totalHeight = lines.length * lineHeight;
+            const startY = y - (totalHeight / 2) + (lineHeight / 2);
+
+            for (let i = 0; i < lines.length; i++) {
+                ctx.fillText(lines[i], x, startY + (i * lineHeight));
+            }
+        }
+
+        // Função para aplicar filtros aos dados da imagem
+        function applyFilterToImageData(imageData, filter) {
+            const data = imageData.data;
+            switch (filter) {
+                case 'grayscale':
+                    for (let i = 0; i < data.length; i += 4) {
+                        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        data[i] = avg;
+                        data[i + 1] = avg;
+                        data[i + 2] = avg;
+                    }
+                    break;
+                case 'sepia':
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        
+                        data[i] = (r * 0.393) + (g * 0.769) + (b * 0.189);
+                        data[i + 1] = (r * 0.349) + (g * 0.686) + (b * 0.168);
+                        data[i + 2] = (r * 0.272) + (g * 0.534) + (b * 0.131);
+                    }
+                    break;
+                case 'vintage':
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        
+                        data[i] = (r * 0.5) + (g * 0.3) + (b * 0.2);
+                        data[i + 1] = (r * 0.2) + (g * 0.5) + (b * 0.3);
+                        data[i + 2] = (r * 0.1) + (g * 0.3) + (b * 0.6);
+                    }
+                    break;
+            }
+        }
+
+        // Event listener para mensagem overlay
         document.getElementById('message').addEventListener('input', function(e) {
             const overlay = document.getElementById('messageOverlay');
             overlay.textContent = e.target.value;
             overlay.style.display = e.target.value ? 'block' : 'none';
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('Bem-vindo! Comece enviando uma foto especial.');
         });
     </script>
 </body>
