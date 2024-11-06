@@ -469,36 +469,59 @@
         function downloadFrame() {
             showLoading();
             const framePreview = document.getElementById('framePreview');
-            
+            const img = document.getElementById('previewImage');
+
+            // Criar canvas com proporções baseadas na imagem original
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            
-            // Aumentar a resolução do canvas para 4K
-            canvas.width = 3840;
-            canvas.height = 2160;
-            
+
+            // Determinar o tamanho do canvas baseado na imagem original
+            let baseWidth = img.naturalWidth || img.width;
+            let baseHeight = img.naturalHeight || img.height;
+
+            // Garantir tamanho mínimo e máximo mantendo a proporção
+            const maxDimension = 4000;  // Tamanho máximo para qualquer dimensão
+            const minDimension = 1500;  // Tamanho mínimo para a menor dimensão
+
+            // Calcular a escala mantendo a proporção
+            const scale = Math.min(maxDimension / Math.max(baseWidth, baseHeight),
+                                    minDimension / Math.min(baseWidth, baseHeight));
+
+            // Aplicar a escala
+            canvas.width = Math.round(baseWidth * scale);
+            canvas.height = Math.round(baseHeight * scale);
+
             // Habilitar configurações de alta qualidade
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
-            
+
+            // Calcular a borda proporcional ao tamanho da imagem
+            const borderWidth = Math.min(canvas.width, canvas.height) * 0.1; // 10% da menor dimensão
+
+            // Aumentar o canvas para acomodar a borda
+            const finalCanvas = document.createElement('canvas');
+            const finalCtx = finalCanvas.getContext('2d');
+            finalCanvas.width = canvas.width + (borderWidth * 2);
+            finalCanvas.height = canvas.height + (borderWidth * 2);
+
+            // Configurar qualidade do contexto final
+            finalCtx.imageSmoothingEnabled = true;
+            finalCtx.imageSmoothingQuality = 'high';
+
             // Desenhar a moldura
-            ctx.fillStyle = frameStyles[selectedStyle];
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Desenhar a imagem
-            const img = document.getElementById('previewImage');
-            const borderWidth = canvas.width * 0.1; // 10% de borda
-            
-            // Criar canvas temporário para aplicar rotação e filtros em alta resolução
+            finalCtx.fillStyle = frameStyles[selectedStyle];
+            finalCtx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+
+            // Criar canvas temporário para rotação e filtros
             const tempCanvas = document.createElement('canvas');
             const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = canvas.width - (borderWidth * 2);
-            tempCanvas.height = canvas.height - (borderWidth * 2);
-            
-            // Configurar alta qualidade no canvas temporário
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // Configurar qualidade do contexto temporário
             tempCtx.imageSmoothingEnabled = true;
             tempCtx.imageSmoothingQuality = 'high';
-            
+
             // Aplicar rotação
             if (currentRotation !== 0) {
                 tempCtx.save();
@@ -506,66 +529,66 @@
                 tempCtx.rotate(currentRotation * Math.PI/180);
                 tempCtx.translate(-tempCanvas.width/2, -tempCanvas.height/2);
             }
-            
-            // Desenhar imagem no canvas temporário com melhor qualidade
+
+            // Desenhar imagem no canvas temporário mantendo proporções
             tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-            
+
             if (currentRotation !== 0) {
                 tempCtx.restore();
             }
-            
-            // Aplicar filtros com preservação de qualidade
+
+            // Aplicar filtros
             if (currentFilter !== 'normal') {
                 const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
                 applyFilterToImageData(imageData, currentFilter);
                 tempCtx.putImageData(imageData, 0, 0);
             }
-            
-            // Copiar do canvas temporário para o principal
-            ctx.drawImage(tempCanvas, borderWidth, borderWidth);
-            
-            // Adicionar mensagem se existir com fonte maior para maior resolução
+
+            // Copiar do canvas temporário para o final com a borda
+            finalCtx.drawImage(tempCanvas, borderWidth, borderWidth);
+
+            // Adicionar mensagem se existir
             const message = document.getElementById('message').value;
             if (message) {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-                const messageY = canvas.height - borderWidth - 200;
-                const messageHeight = 160;
+                finalCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                const fontSize = Math.round(Math.min(finalCanvas.width, finalCanvas.height) * 0.04); // Fonte proporcional
+                const messageY = finalCanvas.height - borderWidth - (fontSize * 2);
+                const messageHeight = fontSize * 1.8;
                 
                 // Fundo da mensagem com cantos arredondados
-                roundRect(ctx, 
-                    borderWidth + 80,
+                roundRect(finalCtx, 
+                    borderWidth + (fontSize * 0.8),
                     messageY,
-                    canvas.width - (borderWidth * 2) - 160,
+                    finalCanvas.width - (borderWidth * 2) - (fontSize * 1.6),
                     messageHeight,
-                    40
+                    fontSize * 0.4
                 );
                 
-                // Texto da mensagem em alta resolução
-                ctx.fillStyle = '#ff758c';
-                ctx.font = 'bold 96px Montserrat';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
+                // Texto da mensagem
+                finalCtx.fillStyle = '#ff758c';
+                finalCtx.font = `bold ${fontSize}px Montserrat`;
+                finalCtx.textAlign = 'center';
+                finalCtx.textBaseline = 'middle';
                 
                 // Quebra de texto automática
-                const maxWidth = canvas.width - (borderWidth * 2) - 240;
-                wrapText(ctx, message, canvas.width/2, messageY + messageHeight/2, maxWidth, 96);
+                const maxWidth = finalCanvas.width - (borderWidth * 2) - (fontSize * 2.4);
+                wrapText(finalCtx, message, finalCanvas.width/2, messageY + messageHeight/2, maxWidth, fontSize);
             }
-            
-            // Adicionar data em alta resolução
+
+            // Adicionar data
             const date = new Date().toLocaleDateString('pt-BR');
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-            ctx.font = '64px Montserrat';
-            ctx.textAlign = 'right';
-            ctx.fillText(date, canvas.width - borderWidth - 40, borderWidth + 80);
-            
-            // Download com máxima qualidade
+            finalCtx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            const dateFontSize = Math.round(Math.min(finalCanvas.width, finalCanvas.height) * 0.02);
+            finalCtx.font = `${dateFontSize}px Montserrat`;
+            finalCtx.textAlign = 'right';
+            finalCtx.fillText(date, finalCanvas.width - borderWidth - (dateFontSize * 0.6), borderWidth + dateFontSize);
+
+            // Download
             const link = document.createElement('a');
             const title = document.getElementById('memoryTitle').value || 'nossa-memoria';
             link.download = `${title}-${Date.now()}.png`;
-            
-            // Usar qualidade máxima na exportação
-            link.href = canvas.toDataURL('image/png', 1.0);
-            
+            link.href = finalCanvas.toDataURL('image/png', 1.0);
+
             setTimeout(() => {
                 hideLoading();
                 link.click();
